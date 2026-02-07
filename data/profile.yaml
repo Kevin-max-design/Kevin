@@ -1,0 +1,80 @@
+# User Profile Configuration
+# Fill in your personal details below
+
+personal:
+  name: "arem kevin"  # Your full name
+  email: "aremkevin85@gmail.com"  # Your email address
+  phone: "+91 7036339609"  # Your phone number
+  linkedin_url: "https://www.linkedin.com/in/arem-kevin-91a7b2307/"  # Your LinkedIn profile URL
+  github_url: "https://github.com/Kevin-max-design"  # Your GitHub profile URL
+  portfolio_url: "https://portfolio-sigma-mauve-88.vercel.app/"  # Your portfolio website (optional)
+  location: "Remote"
+
+# Your technical skills
+skills:
+  programming:
+    - Python
+  domains:
+    - Machine Learning
+    - Data Science
+    - Data Analysis
+    - Deep Learning
+  tools:
+    - TensorFlow
+    - PyTorch
+    - Scikit-learn
+    - Pandas
+    - NumPy
+    - SQL
+    - Jupyter
+    - Git
+
+# Education details
+education:
+  degree: "B.Tech in Computer Science"
+  specialization: "Data Science"
+  graduation_year: "2025"
+
+# Experience (optional - for more targeted matches)
+experience:
+  years: 0  # Total years of experience
+  summary: "Fresh graduate with strong foundation in Machine Learning and Data Science"
+
+# Job preferences
+preferences:
+  roles:
+    - ML Engineer
+    - Machine Learning Engineer
+    - Data Scientist
+    - Data Analyst
+    - AI Engineer
+    - Research Scientist
+    - Deep Learning Engineer
+  employment_type:
+    - Full-time
+    - Internship
+  work_mode:
+    - Remote
+    - Hybrid
+    - Work from Home
+  min_salary: 0  # Minimum salary expectation (0 for no minimum)
+  
+# Keywords to search for
+keywords:
+  - machine learning
+  - data science
+  - python
+  - ml engineer
+  - data analyst
+  - deep learning
+  - NLP
+  - computer vision
+  - artificial intelligence
+  - data engineering
+  - MLOps
+
+# Companies to prioritize (optional)
+preferred_companies: []
+
+# Companies to exclude (optional)
+excluded_companies: []

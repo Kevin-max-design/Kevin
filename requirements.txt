@@ -1,0 +1,54 @@
+# Web Scraping
+selenium>=4.15.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+playwright>=1.40.0
+playwright-stealth>=1.0.0
+fake-useragent>=1.4.0
+
+# LLM
+ollama>=0.1.6
+langchain>=0.1.0
+langchain-community>=0.0.10
+
+# Database
+sqlalchemy>=2.0.0
+alembic>=1.12.0
+
+# API
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+
+# Utilities
+pyyaml>=6.0
+python-dotenv>=1.0
+schedule>=1.2.0
+pydantic>=2.5.0
+rich>=13.7.0
+typer>=0.9.0
+
+# PDF Processing
+pypdf2>=3.0.0
+python-docx>=1.0.0
+reportlab>=4.0.0
+
+# Machine Learning / Semantic Matching
+sentence-transformers>=2.2.0
+numpy>=1.24.0
+
+# Google Sheets Integration (optional)
+# google-api-python-client>=2.100.0
+# google-auth>=2.23.0
+
+# Fuzzy Matching
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.23.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+
+# Background Tasks (optional - for production)
+# celery>=5.3.0
+# redis>=5.0.0

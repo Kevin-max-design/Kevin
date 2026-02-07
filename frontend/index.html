@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Agent - Dashboard</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .job-item {
+            background: var(--bg-card);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .job-item:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .job-score {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .job-score.high {
+            background: var(--success);
+        }
+
+        .job-score.medium {
+            background: var(--warning);
+        }
+
+        .job-score.low {
+            background: var(--danger);
+        }
+
+        .job-company {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .platform-badge {
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-new {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent);
+        }
+
+        .status-applied {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .status-interview {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.scrape {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .activity-icon.apply {
+            background: rgba(34, 197, 94, 0.2);
+        }
+
+        .activity-icon.match {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .cover-letter {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <h1>Job Application Agent</h1>
+            </div>
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="runScrape()">
+                    🔍 Scrape Jobs
+                </button>
+                <button class="btn btn-secondary" onclick="runMatch()">
+                    🎯 Match Jobs
+                </button>
+                <button class="btn btn-primary" onclick="runBatchApply()">
+                    📝 Auto Apply
+                </button>
+            </div>
+        </header>
+
+        <section class="stats-grid" id="stats">
+            <div class="stat-card">
+                <div class="stat-label">Total Jobs</div>
+                <div class="stat-value" id="stat-total">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Applied</div>
+                <div class="stat-value" id="stat-applied">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pending</div>
+                <div class="stat-value" id="stat-pending">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Today</div>
+                <div class="stat-value" id="stat-today">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">This Week</div>
+                <div class="stat-value" id="stat-week">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Remaining Today</div>
+                <div class="stat-value" id="stat-remaining">-</div>
+            </div>
+        </section>
+
+        <div class="main-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Top Matching Jobs</h2>
+                    <select id="filter-status" onchange="loadJobs()">
+                        <option value="">All Status</option>
+                        <option value="new">New</option>
+                        <option value="applied">Applied</option>
+                    </select>
+                </div>
+                <div class="card-body">
+                    <div class="job-list" id="job-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Activity</h2>
+                </div>
+                <div class="card-body">
+                    <div class="activity-list" id="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon scrape">🔍</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Ready to scrape jobs</div>
+                                <div class="activity-time">Click "Scrape Jobs" to start</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Detail Modal -->
+    <div class="modal-overlay" id="job-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Job Details</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                    <p><strong>Company:</strong> <span id="modal-company"></span></p>
+                    <p><strong>Location:</strong> <span id="modal-location"></span></p>
+                    <p><strong>Match Score:</strong> <span id="modal-score"></span>%</p>
+                    <h4 style="margin: 1rem 0 0.5rem;">Cover Letter Preview</h4>
+                    <div class="cover-letter" id="modal-cover-letter">Loading...</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" id="apply-btn" onclick="applyToJob()">Apply Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+        let selectedJobId = null;
+
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            loadJobs();
+        });
+
+        async function loadStats() {
+            try {
+                const res = await fetch(`${API_BASE}/stats`);
+                const stats = await res.json();
+
+                document.getElementById('stat-total').textContent = stats.total_jobs;
+                document.getElementById('stat-applied').textContent = stats.applied;
+                document.getElementById('stat-pending').textContent = stats.pending;
+                document.getElementById('stat-today').textContent = stats.today_applications;
+                document.getElementById('stat-week').textContent = stats.week_applications;
+                document.getElementById('stat-remaining').textContent = stats.remaining_today;
+            } catch (e) {
+                console.error('Failed to load stats:', e);
+            }
+        }
+
+        async function loadJobs() {
+            const status = document.getElementById('filter-status').value;
+            const jobList = document.getElementById('job-list');
+
+            jobList.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                let url = `${API_BASE}/jobs?limit=20`;
+                if (status) url += `&status=${status}`;
+
+                const res = await fetch(url);
+                const jobs = await res.json();
+
+                if (jobs.length === 0) {
+                    jobList.innerHTML = '<div class="empty-state">No jobs found. Try scraping first!</div>';
+                    return;
+                }
+
+                jobList.innerHTML = jobs.map(job => `
+                    <div class="job-item" onclick="showJobDetails(${job.id})">
+                        <div class="job-header">
+                            <span class="job-title">${escapeHtml(job.title)}</span>
+                            <span class="job-score ${getScoreClass(job.match_score)}">${job.match_score?.toFixed(0) || '-'}%</span>
+                        </div>
+                        <div class="job-company">${escapeHtml(job.company)}</div>
+                        <div class="job-meta">
+                            <span class="platform-badge">${job.platform}</span>
+                            <span>${job.location || 'Remote'}</span>
+                            <span class="status-badge status-${job.status}">${job.status}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                jobList.innerHTML = '<div class="empty-state">Failed to load jobs. Is the server running?</div>';
+                console.error('Failed to load jobs:', e);
+            }
+        }
+
+        async function showJobDetails(jobId) {
+            selectedJobId = jobId;
+            document.getElementById('job-modal').classList.add('active');
+            document.getElementById('modal-cover-letter').textContent = 'Generating cover letter...';
+
+            try {
+                const res = await fetch(`${API_BASE}/cover-letter/${jobId}`);
+                const data = await res.json();
+
+                document.getElementById('modal-title').textContent = data.job.title;
+                document.getElementById('modal-company').textContent = data.job.company;
+                document.getElementById('modal-location').textContent = data.job.location || 'Remote';
+                document.getElementById('modal-score').textContent = data.match_score.toFixed(0);
+                document.getElementById('modal-cover-letter').textContent = data.cover_letter;
+            } catch (e) {
+                document.getElementById('modal-cover-letter').textContent = 'Failed to generate cover letter';
+                console.error('Failed to load job details:', e);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('job-modal').classList.remove('active');
+            selectedJobId = null;
+        }
+
+        async function applyToJob() {
+            if (!selectedJobId) return;
+
+            const btn = document.getElementById('apply-btn');
+            btn.textContent = 'Applying...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`${API_BASE}/apply/${selectedJobId}`, { method: 'POST' });
+                const data = await res.json();
+
+                addActivity('apply', `Applied to job #${selectedJobId}`);
+                closeModal();
+                loadStats();
+                loadJobs();
+            } catch (e) {
+                alert('Failed to apply');
+                console.error(e);
+            } finally {
+                btn.textContent = 'Apply Now';
+                btn.disabled = false;
+            }
+        }
+
+        async function runScrape() {
+            addActivity('scrape', 'Started scraping all platforms...');
+
+            try {
+                await fetch(`${API_BASE}/scrape`, { method: 'POST' });
+                setTimeout(() => {
+                    loadStats();
+                    loadJobs();
+                    addActivity('scrape', 'Scraping complete!');
+                }, 5000);
+            } catch (e) {
+                addActivity('scrape', 'Scraping failed');
+                console.error(e);
+            }
+        }
+
+        async function runMatch() {
+            addActivity('match', 'Matching jobs to profile...');
+
+            try {
+                const res = await fetch(`${API_BASE}/match`, { method: 'POST' });
+                const data = await res.json();
+                addActivity('match', `Matched ${data.total_matches} jobs!`);
+                loadJobs();
+            } catch (e) {
+                addActivity('match', 'Matching failed');
+                console.error(e);
+            }
+        }
+
+        async function runBatchApply() {
+            if (!confirm('Apply to top 10 matching jobs?')) return;
+
+            addActivity('apply', 'Starting batch application...');
+
+            try {
+                await fetch(`${API_BASE}/apply-batch?limit=10`, { method: 'POST' });
+                setTimeout(() => {
+                    loadStats();
+                    loadJobs();
+                    addActivity('apply', 'Batch application complete!');
+                }, 10000);
+            } catch (e) {
+                addActivity('apply', 'Batch apply failed');
+                console.error(e);
+            }
+        }
+
+        function addActivity(type, message) {
+            const list = document.getElementById('activity-list');
+            const icons = { scrape: '🔍', apply: '📝', match: '🎯' };
+            const time = new Date().toLocaleTimeString();
+
+            const item = document.createElement('div');
+            item.className = 'activity-item';
+            item.innerHTML = `
+                <div class="activity-icon ${type}">${icons[type]}</div>
+                <div class="activity-content">
+                    <div class="activity-title">${message}</div>
+                    <div class="activity-time">${time}</div>
+                </div>
+            `;
+
+            list.insertBefore(item, list.firstChild);
+
+            // Keep only last 10 activities
+            while (list.children.length > 10) {
+                list.removeChild(list.lastChild);
+            }
+        }
+
+        function getScoreClass(score) {
+            if (!score) return '';
+            if (score >= 70) return 'high';
+            if (score >= 50) return 'medium';
+            return 'low';
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

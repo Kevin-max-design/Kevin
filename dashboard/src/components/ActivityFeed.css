@@ -1,0 +1,74 @@
+.activity-feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-empty {
+    padding: var(--space-lg);
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.activity-item {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    font-size: 1.25rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.activity-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.activity-action {
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+}
+
+.activity-job {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.activity-time {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+.activity-item.success .activity-icon {
+    background: var(--color-success-subtle);
+}
+
+.activity-item.failed .activity-icon {
+    background: var(--color-danger-subtle);
+}

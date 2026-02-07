@@ -1,0 +1,71 @@
+# Job Application Agent Configuration
+
+app:
+  name: "Job Application Agent"
+  version: "1.0.0"
+  debug: true
+
+# Scraping settings
+scraping:
+  # Interval between scraping runs (in minutes)
+  interval_minutes: 60
+  # Maximum jobs to scrape per platform per run
+  max_jobs_per_platform: 50
+  # Delay between requests (seconds) to avoid rate limiting
+  request_delay: 2
+  # Platforms to scrape
+  platforms:
+    - linkedin
+    - indeed
+    - glassdoor
+    - angellist
+    - naukri
+    - wellfound
+
+# Matching settings
+matching:
+  # Minimum match score (0-100) to consider a job
+  min_score: 50
+  # Weight for different matching criteria
+  weights:
+    skills: 0.40
+    role_title: 0.30
+    work_mode: 0.15
+    employment_type: 0.15
+
+# LLM settings
+llm:
+  provider: "ollama"
+  model: "mistral"
+  temperature: 0.7
+  max_tokens: 2000
+  # Ollama server URL
+  base_url: "http://localhost:11434"
+
+# Application settings
+application:
+  # Auto-apply to jobs above this score
+  auto_apply_min_score: 70
+  # Daily application limit
+  daily_limit: 20
+  # Enable dry run mode (don't actually submit)
+  dry_run: false
+
+# Database settings
+database:
+  # SQLite database path
+  path: "data/jobs.db"
+
+# Dashboard settings
+dashboard:
+  host: "127.0.0.1"
+  port: 8000
+
+# Notification settings
+notifications:
+  email:
+    enabled: false
+    smtp_host: ""
+    smtp_port: 587
+    username: ""
+    password: ""
